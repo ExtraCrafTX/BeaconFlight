@@ -32,7 +32,7 @@ public abstract class BeaconBlockEntityMixin {
         target = "addPotionEffect",
         ordinal = 0
     ), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
-    private void onApplyPlayerEffects(CallbackInfo info, double d, int i1, int i2, BoundingBox bb, List l, Iterator it, PlayerEntity player) {
+    private void onApplyPlayerEffects(CallbackInfo info, double d, int i, int duration, BoundingBox bb, List l, Iterator it, PlayerEntity player) {
         if(player instanceof ServerPlayerEntity){
             Config config = Config.INSTANCE;
             if(level < config.minBeaconLevel)
@@ -59,7 +59,7 @@ public abstract class BeaconBlockEntityMixin {
                     return;
             }
             FlyEffectable p = (FlyEffectable)player;
-            p.allowFlight(100);
+            p.allowFlight(duration);
         }
     }
 
