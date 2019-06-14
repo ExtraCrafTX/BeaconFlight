@@ -1,5 +1,6 @@
 package com.extracraftx.minecraft.beaconflight.mixin;
 
+import com.extracraftx.minecraft.beaconflight.events.EventHandler;
 import com.extracraftx.minecraft.beaconflight.interfaces.FlyEffectable;
 import com.mojang.authlib.GameProfile;
 
@@ -36,20 +37,28 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Fl
         sendAbilitiesUpdate();
     }
 
-    @Inject(method = "tick", at = @At("HEAD"))
-    private void onTick(CallbackInfo info){
+    @Override
+    public void tickFlight() {
         if(flyTicksLeft > 0){
             flyTicksLeft --;
-            if(flyTicksLeft == 0){
+            if(flyTicksLeft == 0)
                 disallowFlight();
-            }
         }
+    }
+
+    @Override
+    public void setFlightTicks(int ticks) {
+        flyTicksLeft = ticks;
+    }
+
+    @Inject(method = "tick", at = @At("HEAD"))
+    private void onTick(CallbackInfo info){
+        EventHandler.onPlayerTick(this);
     }
 
     @Inject(method = "setGameMode", at = @At("RETURN"))
     private void onSetGameMode(GameMode gameMode, CallbackInfo info){
-        if(gameMode.isCreative())
-            flyTicksLeft = 0;
+        EventHandler.onSetGameMode(gameMode, this);
     }
 
 
