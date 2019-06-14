@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "beaconflight",
-  "version": "0.0.1",
+  "version": "0.1.0",
 
   "name": "BeaconFlight",
   "description": "This mod allows flying when in range of a beacon!",
@@ -12,7 +12,7 @@
     "homepage": "https://kaamiljasani.com/"
   },
 
-  "license": "CC0-1.0",
+  "license": "CC BY-NC-SA 4.0",
   "icon": "assets/modid/icon.png",
 
   "environment": "*",

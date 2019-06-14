@@ -48,6 +48,10 @@ public abstract class BeaconBlockEntityMixin {
                 if(sp.getOffHandStack().getItem() != config.offHand)
                     return;
             }
+            if(config.anyHand != null){
+                if(sp.getOffHandStack().getItem() != config.anyHand && sp.getMainHandStack().getItem() != config.anyHand)
+                    return;
+            }
             ServerAdvancementLoader advLoader = sp.getServer().getAdvancementManager();
             PlayerAdvancementTracker playerAdv = sp.getAdvancementManager();
             for(Identifier advancement : Config.INSTANCE.advancements){

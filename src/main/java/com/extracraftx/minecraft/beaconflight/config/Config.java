@@ -26,6 +26,8 @@ public class Config{
     public transient Item mainHand;
     public String offHandItem;
     public transient Item offHand;
+    public String anyHandItem;
+    public transient Item anyHand;
     public String[] advancementsRequired = new String[]{"minecraft:end/elytra"};
     public transient Identifier[] advancements;
 
@@ -69,5 +71,7 @@ public class Config{
             mainHand = Registry.ITEM.get(new Identifier(mainHandItem));
         if(offHandItem != null)
             offHand = Registry.ITEM.get(new Identifier(offHandItem));
+        if(anyHandItem != null)
+            anyHand = Registry.ITEM.get(new Identifier(anyHandItem));
     }
 }
