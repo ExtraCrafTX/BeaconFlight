@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "beaconflight",
+  "version": "0.0.1",
+
+  "name": "BeaconFlight",
+  "description": "This mod allows flying when in range of a beacon!",
+  "authors": [
+    "ExtraCrafTX"
+  ],
+  "contact": {
+    "homepage": "https://kaamiljasani.com/"
+  },
+
+  "license": "CC0-1.0",
+  "icon": "assets/modid/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.extracraftx.minecraft.beaconflight.BeaconFlight"
+    ]
+  },
+  "mixins": [
+    "beaconflight.mixins.json"
+  ],
+
+  "requires": {
+    "fabricloader": ">=0.4.0",
+    "fabric": "*"
+  }
+}

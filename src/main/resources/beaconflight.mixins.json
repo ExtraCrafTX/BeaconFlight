@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "com.extracraftx.minecraft.beaconflight.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "BeaconBlockEntityMixin",
+    "ServerPlayerEntityMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
