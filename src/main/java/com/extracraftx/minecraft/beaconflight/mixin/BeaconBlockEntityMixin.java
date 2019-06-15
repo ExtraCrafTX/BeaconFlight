@@ -23,9 +23,11 @@ public abstract class BeaconBlockEntityMixin {
     private int level;
 
     @Inject(method = "applyPlayerEffects",
-    at = @At(value = "INVOKE",
-        target = "addPotionEffect",
-        ordinal = 0
+    at = @At(value = "INVOKE_ASSIGN",
+        target = "Ljava/util/Iterator;next()Ljava/lang/Object;",
+        ordinal = 0,
+        shift = At.Shift.BY,
+        by = 2
     ), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
     private void onApplyPlayerEffects(CallbackInfo info, double d, int i, int duration, BoundingBox bb, List l, Iterator it, PlayerEntity player) {
         EventHandler.onBeaconUpdate(player, duration, level);
