@@ -25,7 +25,8 @@ public class BeaconFlight implements ModInitializer{
     }
 
     public static void log(Level level, String message){
-        LOGGER.log(level, "["+MOD_NAME+"] " + message);
+        if(Config.INSTANCE.log == null || level.isMoreSpecificThan(Config.INSTANCE.log))
+            LOGGER.log(level, "["+MOD_NAME+"] " + message);
     }
 
 }

@@ -24,7 +24,7 @@ public class Config{
     public int minBeaconLevel = 4;
     public String mainHandItem;
     public transient Item mainHand;
-    public String offHandItem = "minecraft:feather";
+    public String offHandItem;
     public transient Item offHand;
     public String anyHandItem;
     public transient Item anyHand;
@@ -38,7 +38,10 @@ public class Config{
     public transient Item feet;
     public String[] advancementsRequired = new String[]{"minecraft:end/elytra"};
     public transient Identifier[] advancements;
+    public int flightLingerTime;
     public int slowFallingTime = 10;
+    public String logLevel = "INFO";
+    public transient Level log;
 
     public static void loadConfig(){
         try{
@@ -47,11 +50,14 @@ public class Config{
                 FileWriter fw = new FileWriter(configFile);
                 fw.append(gson.toJson(INSTANCE));
                 fw.close();
+                BeaconFlight.log(Level.INFO, "Default config generated.");
             }else{
                 FileReader fr = new FileReader(configFile);
                 INSTANCE = gson.fromJson(fr, Config.class);
                 fr.close();
+                INSTANCE.generateTransients();
                 BeaconFlight.log(Level.INFO, "Config loaded.");
+                return;
             }
         }catch(Exception e){
             BeaconFlight.log(Level.WARN, "Error loading config, using default values.");
@@ -90,6 +96,7 @@ public class Config{
             legs = getItem(legsItem);
         if(feetItem != null)
             feet = getItem(feetItem);
+        log = Level.getLevel(logLevel);
     }
 
     private static Item getItem(String id){
