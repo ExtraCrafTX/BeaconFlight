@@ -13,12 +13,13 @@ public class BeaconFlight implements ModInitializer{
 
     public static final String MOD_ID = "beaconflight";
     public static final String MOD_NAME = "BeaconFlight";
-    public static final String MOD_VER = "0.1.0";
+    public static final String MOD_VER = "0.2.0";
 
     public static Logger LOGGER = LogManager.getLogger();
 
     @Override
     public void onInitialize() {
+        log(Level.INFO, "version " + MOD_VER);
         Config.loadConfig();
         log(Level.INFO, "Initialized successfully.");
     }
