@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "beaconflight",
-  "version": "0.2.0",
+  "version": "1.0.0",
 
   "name": "BeaconFlight",
   "description": "This mod allows flying when in range of a beacon when certain configurable conditions are met.",
