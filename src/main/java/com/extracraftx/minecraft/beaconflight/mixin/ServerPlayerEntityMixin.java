@@ -14,6 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.world.GameMode;
 import net.minecraft.world.World;
@@ -27,9 +28,11 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Fl
     private int flyTicksLeft = 0;
 
     @Override
-    public void allowFlight(int ticks) {
+    public void allowFlight(int ticks, boolean setFlying) {
         flyTicksLeft = Math.max(flyTicksLeft, ticks);
         abilities.allowFlying = true;
+        if(setFlying)
+            abilities.flying = true;
         sendAbilitiesUpdate();
     }
 
@@ -65,6 +68,15 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Fl
         EventHandler.onSetGameMode(gameMode, this);
     }
 
+    @Inject(method = "writeCustomDataToTag", at = @At("RETURN"))
+    private void onWriteCustomDataToTag(CompoundTag tag, CallbackInfo info){
+        tag.putInt("flyTicksLeft", flyTicksLeft);
+    }
+
+    @Inject(method = "readCustomDataFromTag", at = @At("RETURN"))
+    private void onReadCustomDataFromTag(CompoundTag tag, CallbackInfo info){
+        allowFlight(tag.getInt("flyTicksLeft"), false);
+    }
 
     @Shadow
     public void sendAbilitiesUpdate(){}
