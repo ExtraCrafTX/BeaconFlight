@@ -1,5 +1,6 @@
 package com.extracraftx.minecraft.beaconflight.mixin;
 
+import com.extracraftx.minecraft.beaconflight.config.Config;
 import com.extracraftx.minecraft.beaconflight.events.EventHandler;
 import com.extracraftx.minecraft.beaconflight.interfaces.FlyEffectable;
 import com.mojang.authlib.GameProfile;
@@ -10,6 +11,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.world.GameMode;
@@ -35,6 +38,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Fl
         abilities.allowFlying = false;
         abilities.flying = false;
         sendAbilitiesUpdate();
+        addPotionEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, Config.INSTANCE.slowFallingTime*20));
     }
 
     @Override

@@ -24,12 +24,13 @@ public class Config{
     public int minBeaconLevel = 4;
     public String mainHandItem;
     public transient Item mainHand;
-    public String offHandItem;
+    public String offHandItem = "minecraft:feather";
     public transient Item offHand;
     public String anyHandItem;
     public transient Item anyHand;
     public String[] advancementsRequired = new String[]{"minecraft:end/elytra"};
     public transient Identifier[] advancements;
+    public int slowFallingTime = 10;
 
     public static void loadConfig(){
         try{
