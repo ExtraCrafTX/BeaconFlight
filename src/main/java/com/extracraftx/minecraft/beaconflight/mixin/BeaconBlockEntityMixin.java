@@ -24,10 +24,8 @@ public abstract class BeaconBlockEntityMixin {
 
     @Inject(method = "applyPlayerEffects",
     at = @At(value = "INVOKE_ASSIGN",
-        target = "Ljava/util/Iterator;next()Ljava/lang/Object;",
-        ordinal = 0,
-        shift = At.Shift.BY,
-        by = 2
+        target = "Lnet/minecraft/entity/player/PlayerEntity;addPotionEffect(Lnet/minecraft/entity/effect/StatusEffectInstance;)Z",
+        ordinal = 0
     ), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
     private void onApplyPlayerEffects(CallbackInfo info, double d, int i, int duration, BoundingBox bb, List l, Iterator it, PlayerEntity player) {
         EventHandler.onBeaconUpdate(player, duration, level);
