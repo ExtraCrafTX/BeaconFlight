@@ -19,7 +19,7 @@ public class Config{
 
     private static final File configDir = new File("config");
     private static final File configFile = new File("config/" + BeaconFlight.MOD_ID + "_config.json");
-    private static final Gson gson = new GsonBuilder().setPrettyPrinting().setLenient().create();
+    private static final Gson gson = new GsonBuilder().setPrettyPrinting().setLenient().serializeNulls().create();
 
     public int minBeaconLevel = 4;
     public String mainHandItem;
