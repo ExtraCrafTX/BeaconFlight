@@ -9,7 +9,9 @@
     "ExtraCrafTX"
   ],
   "contact": {
-    
+    "sources": "https://github.com/ExtraCrafTX/BeaconFlight",
+    "issues": "https://minecraft.curseforge.com/projects/beaconflight/issues",
+    "homepage": "https://minecraft.curseforge.com/projects/beaconflight"
   },
 
   "license": "CC BY-NC-SA 4.0",
