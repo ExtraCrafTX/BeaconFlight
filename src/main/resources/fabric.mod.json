@@ -9,11 +9,11 @@
     "ExtraCrafTX"
   ],
   "contact": {
-
+    
   },
 
   "license": "CC BY-NC-SA 4.0",
-  "icon": "assets/modid/icon.png",
+  "icon": "assets/beaconflight/icon.png",
 
   "environment": "*",
   "entrypoints": {
