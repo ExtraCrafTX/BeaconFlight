@@ -31,22 +31,22 @@ This is all configurable, along with requiring the player to have certain items 
 ### Example 
 The following is an example config that requires a max level beacon, requires the player to hold feathers in both hands and have equipped full diamond armour and have the "Sky's the Limit" and "Return to Sender" advancements. It will grant flight for the same amount of time as the potion effects and gives 10 seconds of Slow Falling upon losing flight:
 ```json
-{ 
- "minBeaconLevel": 4, 
- "mainHandItem": "minecraft:feather", 
- "offHandItem": "minecraft:feather", 
- "anyHandItem": null, 
- "headItem": "minecraft:diamond_helmet", 
- "chestItem": "minecraft:diamond_chestplate", 
- "legsItem": "minecraft:diamond_leggings", 
- "feetItem": "minecraft:diamond_boots", 
- "advancementsRequired": [ 
-  "minecraft:end/elytra", 
-  "minecraft:nether/return_to_sender" 
- ], 
- "flightLingerTime": 0, 
- "slowFallingTime": 10, 
- "logLevel": "INFO" 
+{
+  "minBeaconLevel": 4,
+  "mainHandItem": "minecraft:feather",
+  "offHandItem": "minecraft:feather",
+  "anyHandItem": null,
+  "headItem": "minecraft:diamond_helmet",
+  "chestItem": "minecraft:diamond_chestplate",
+  "legsItem": "minecraft:diamond_leggings",
+  "feetItem": "minecraft:diamond_boots",
+  "advancementsRequired": [
+    "minecraft:end/elytra",
+    "minecraft:nether/return_to_sender"
+  ],
+  "flightLingerTime": 0,
+  "slowFallingTime": 10,
+  "logLevel": "INFO"
 }
 ```
 The config file is present in a folder called "config" in the same directory as Minecraft, which is the server directory in case of a dedicated server, or .minecraft in case of the client (it will be in the same place as the mods folder). It is called `beaconflight_config.json`.
