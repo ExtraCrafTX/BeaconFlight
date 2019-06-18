@@ -24,7 +24,7 @@ This is all configurable, along with requiring the player to have certain items 
 * `slowFallingTime` specifies how long the Slow Falling effect is given for after flight is lost
 * `logLevel` specifies the level of logging in the console, can be `INFO`, `WARN`, `ERROR` or `OFF`
 
-\* The id of the advancements is required. This can be found in the in-game autocomplete for the advancement command, or a full list with descriptions may be found on the Minecraft wiki.
+\* The id of the advancements is required. This can be found in the in-game autocomplete for the advancement command, or a full list with descriptions may be found on the [Minecraft wiki](https://minecraft.gamepedia.com/Advancements#List_of_advancements).
 
 ** A flightLingerTime of 0 gives the same time as the effects for that beacon level. The time should also be more than 4 seconds if custom, as beacons only apply their effects every 4 seconds.
 
