@@ -1,5 +1,7 @@
 # BeaconFlight
 
+![BeaconFlight icon](src/main/resources/assets/beaconflight/icon-medium.png?raw=true)
+
 This is a server-side only mod (works with unmodded clients!) which allows beacons to grant creative flight to players when certain configurable conditions are met. 
 
 ***Note:*** *Although this is a server-side mod, it can still be used in single player on clients*
