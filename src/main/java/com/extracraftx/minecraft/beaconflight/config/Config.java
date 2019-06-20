@@ -38,6 +38,7 @@ public class Config{
     public transient Item feet;
     public String[] advancementsRequired = new String[]{"minecraft:end/elytra"};
     public transient Identifier[] advancements;
+    public float xpDrainRate = 0;
     public int flightLingerTime;
     public int slowFallingTime = 10;
     public String logLevel = "INFO";

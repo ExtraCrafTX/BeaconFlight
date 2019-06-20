@@ -26,14 +26,17 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Fl
     }
 
     private int flyTicksLeft = 0;
+    private float xpCounter;
 
     @Override
     public void allowFlight(int ticks, boolean setFlying) {
         flyTicksLeft = Math.max(flyTicksLeft, ticks);
-        abilities.allowFlying = true;
-        if(setFlying)
-            abilities.flying = true;
-        sendAbilitiesUpdate();
+        if(Config.INSTANCE.xpDrainRate == 0 || totalExperience > 0){
+            abilities.allowFlying = true;
+            if(setFlying)
+                abilities.flying = true;
+            sendAbilitiesUpdate();
+        }
     }
 
     @Override
@@ -47,6 +50,15 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Fl
     @Override
     public void tickFlight() {
         if(flyTicksLeft > 0){
+            if(abilities.flying){
+                xpCounter += Config.INSTANCE.xpDrainRate;
+                addExperience(-(int)Math.floor(xpCounter));
+                xpCounter %= 1;
+                if(totalExperience == 0)
+                    disallowFlight();
+                else
+                    allowFlight(flyTicksLeft, false);
+            }
             flyTicksLeft --;
             if(flyTicksLeft == 0)
                 disallowFlight();
