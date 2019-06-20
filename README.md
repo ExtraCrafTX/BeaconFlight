@@ -11,9 +11,9 @@ By default, the mod requires the beacon to be an activated level 4 beacon (i.e. 
 If the player goes out of range of the beacon, the flight will last the same amount of time as the potion effects. Once the flight expires, the player will be given the Slow Falling effect for 10s, allowing them to glide back down safely.
 
 ## Configuration
-This is all configurable, along with requiring the player to have certain items equipped or held. Here are all the config options:
+This is all configurable, along with requiring the player to have certain items equipped or held, or to use XP as fuel. Here are all the config options:
 
-* `minBeaconLevel` specifies the minimum level the beacon must be to grant this effect
+* `minBeaconLevel` specifies the minimum level the beacon must be to grant this effect (must be an integer)
 * `mainHandItem` specifies the item, if any, which needs to be held in the player's main hand
 * `offHandItem` specifies the item, if any, which needs to be held in the player's off hand
 * `anyHandItem` specifies an item, if any, which needs to be held in one of the player's hands
@@ -22,8 +22,9 @@ This is all configurable, along with requiring the player to have certain items 
 * `legsItem` specifies the item, if any, which must be worn on the player's legs
 * `feetItem` specifies the item, if any, which must be worn on the player's feet
 * `advancementsRequired` specifies the list of advancements that the player must have unlocked*
-* `flightLingerTime` specifies how long the flight lasts when not in range**
-* `slowFallingTime` specifies how long the Slow Falling effect is given for after flight is lost
+* `xpDrainRaite` specifies the amount of XP to use per tick of flight (0.25 works well)
+* `flightLingerTime` specifies how long the flight lasts when not in range (must be an integer)**
+* `slowFallingTime` specifies how long the Slow Falling effect is given for after flight is lost (must be an integer)
 * `logLevel` specifies the level of logging in the console, can be `INFO`, `WARN`, `ERROR` or `OFF`
 
 \* The id of the advancements is required. This can be found in the in-game autocomplete for the advancement command, or a full list with descriptions may be found on the [Minecraft wiki](https://minecraft.gamepedia.com/Advancements#List_of_advancements).
@@ -46,6 +47,7 @@ The following is an example config that requires a max level beacon, requires th
     "minecraft:end/elytra",
     "minecraft:nether/return_to_sender"
   ],
+  "xpDrainRate": 0.25,
   "flightLingerTime": 0,
   "slowFallingTime": 10,
   "logLevel": "INFO"
