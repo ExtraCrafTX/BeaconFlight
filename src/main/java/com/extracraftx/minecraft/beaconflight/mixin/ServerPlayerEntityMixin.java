@@ -50,13 +50,15 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Fl
     @Override
     public void tickFlight() {
         if(flyTicksLeft > 0){
-            if(abilities.flying){
-                xpCounter += Config.INSTANCE.xpDrainRate;
-                addExperience(-(int)Math.floor(xpCounter));
-                xpCounter %= 1;
-                if(totalExperience == 0)
-                    disallowFlight();
-                else
+            if(Config.INSTANCE.xpDrainRate != 0){
+                if(abilities.flying){
+                    xpCounter += Config.INSTANCE.xpDrainRate;
+                    addExperience(-(int)Math.floor(xpCounter));
+                    xpCounter %= 1;
+                    if(Config.INSTANCE.xpDrainRate > 0 && totalExperience == 0)
+                        disallowFlight();
+                }
+                if(totalExperience > 0)
                     allowFlight(flyTicksLeft, false);
             }
             flyTicksLeft --;
