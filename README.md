@@ -22,7 +22,7 @@ This is all configurable, along with requiring the player to have certain items 
 * `legsItem` specifies the item, if any, which must be worn on the player's legs
 * `feetItem` specifies the item, if any, which must be worn on the player's feet
 * `advancementsRequired` specifies the list of advancements that the player must have unlocked*
-* `xpDrainRaite` specifies the amount of XP to use per tick of flight (0.25 works well)
+* `xpDrainRaite` specifies the amount of XP to use per tick of flight (0.25 works well) **(v1.1+)**
 * `flightLingerTime` specifies how long the flight lasts when not in range (must be an integer)**
 * `slowFallingTime` specifies how long the Slow Falling effect is given for after flight is lost (must be an integer)
 * `logLevel` specifies the level of logging in the console, can be `INFO`, `WARN`, `ERROR` or `OFF`
@@ -32,7 +32,7 @@ This is all configurable, along with requiring the player to have certain items 
 ** A flightLingerTime of 0 gives the same time as the effects for that beacon level. The time should also be more than 4 seconds if custom, as beacons only apply their effects every 4 seconds.
 
 ### Example 
-The following is an example config that requires a max level beacon, requires the player to hold feathers in both hands and have equipped full diamond armour and have the "Sky's the Limit" and "Return to Sender" advancements. It will grant flight for the same amount of time as the potion effects and gives 10 seconds of Slow Falling upon losing flight:
+The following is an example config that requires a max level beacon, requires the player to hold feathers in both hands and have equipped full diamond armour and have the "Sky's the Limit" and "Return to Sender" advancements. It will grant flight for the same amount of time as the potion effects, will use 0.25 XP per tick of flight and gives 10 seconds of Slow Falling upon losing flight:
 ```json
 {
   "minBeaconLevel": 4,
