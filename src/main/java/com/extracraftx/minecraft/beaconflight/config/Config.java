@@ -40,6 +40,8 @@ public class Config{
     public transient Identifier[] advancements;
     public float xpDrainRate = 0;
     public int flightLingerTime;
+    public int flightDuration;
+    public int flightRange;
     public int slowFallingTime = 10;
     public String logLevel = "INFO";
     public transient Level log;

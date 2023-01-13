@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.extracraftx.minecraft.beaconflight.events.EventHandler;
+import com.extracraftx.minecraft.beaconflight.config.Config;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -22,10 +23,19 @@ public class BeaconBlockEntityMixin {
 
     @Inject(method = "applyPlayerEffects", at = @At("TAIL"))
     private static void applyPlayerEffects(World world, BlockPos pos, int beaconLevel, StatusEffect primaryEffect, StatusEffect secondaryEffect, CallbackInfo ci) {
+        Config config = Config.INSTANCE;
+        
         // Calculate duration of effect
         int duration = (2 * beaconLevel + 9) * 20;
         // Calc range of beacon
         double d = beaconLevel * 10 + 10;
+
+        if (config.flightRange != 0) {
+            d = config.flightRange;
+        }
+        if (config.flightDuration != 0) {
+            duration = config.flightDuration * 20;
+        }
 
         // Create box around beacon that represents the status effect range
         Box box = (new Box(pos)).expand(d).stretch(0.0D, world.getHeight(), 0.0D);
