@@ -43,10 +43,7 @@ public class EventHandler {
                     return;
             }
             FlyEffectable p = (FlyEffectable)player;
-            if(config.flightLingerTime != 0)
-                p.allowFlight(config.flightLingerTime, false);
-            else
-                p.allowFlight(duration, false);
+            p.allowFlight(duration, false);
         }
     }
     
