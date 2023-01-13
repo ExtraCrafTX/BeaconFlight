@@ -22,8 +22,11 @@ public class BeaconBlockEntityMixin {
 
     @Inject(method = "applyPlayerEffects", at = @At("TAIL"))
     private static void applyPlayerEffects(World world, BlockPos pos, int beaconLevel, StatusEffect primaryEffect, StatusEffect secondaryEffect, CallbackInfo ci) {
+        // Calculate duration of effect
+        int duration = (2 * beaconLevel + 9) * 20;
         // Calc range of beacon
         double d = beaconLevel * 10 + 10;
+
         // Create box around beacon that represents the status effect range
         Box box = (new Box(pos)).expand(d).stretch(0.0D, world.getHeight(), 0.0D);
         // Get all players in the box
@@ -33,7 +36,7 @@ public class BeaconBlockEntityMixin {
         for (Iterator<PlayerEntity> iterator = players.iterator(); iterator.hasNext();) {
             PlayerEntity player = iterator.next();
             // Call event handler
-            EventHandler.onBeaconUpdate(player, 320, beaconLevel);
+            EventHandler.onBeaconUpdate(player, duration, beaconLevel);
         }
     }
 }
