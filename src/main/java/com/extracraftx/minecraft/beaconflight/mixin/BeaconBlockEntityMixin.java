@@ -6,29 +6,34 @@ import java.util.List;
 import com.extracraftx.minecraft.beaconflight.events.EventHandler;
 
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import net.minecraft.block.entity.BeaconBlockEntity;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.BoundingBox;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraft.util.math.Box;
 
 @Mixin(BeaconBlockEntity.class)
-public abstract class BeaconBlockEntityMixin {
+public class BeaconBlockEntityMixin {
 
-    @Shadow
-    private int level;
+    @Inject(method = "applyPlayerEffects", at = @At("TAIL"))
+    private static void applyPlayerEffects(World world, BlockPos pos, int beaconLevel, StatusEffect primaryEffect, StatusEffect secondaryEffect, CallbackInfo ci) {
+        // Calc range of beacon
+        double d = beaconLevel * 10 + 10;
+        // Create box around beacon that represents the status effect range
+        Box box = (new Box(pos)).expand(d).stretch(0.0D, world.getHeight(), 0.0D);
+        // Get all players in the box
+        List<PlayerEntity> players = world.getNonSpectatingEntities(PlayerEntity.class, box);
 
-    @Inject(method = "applyPlayerEffects",
-    at = @At(value = "INVOKE_ASSIGN",
-        target = "Lnet/minecraft/entity/player/PlayerEntity;addPotionEffect(Lnet/minecraft/entity/effect/StatusEffectInstance;)Z",
-        ordinal = 0
-    ), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
-    private void onApplyPlayerEffects(CallbackInfo info, double d, int i, int duration, BoundingBox bb, List l, Iterator it, PlayerEntity player) {
-        EventHandler.onBeaconUpdate(player, duration, level);
+        // Iterate over all players
+        for (Iterator<PlayerEntity> iterator = players.iterator(); iterator.hasNext();) {
+            PlayerEntity player = iterator.next();
+            // Call event handler
+            EventHandler.onBeaconUpdate(player, 320, beaconLevel);
+        }
     }
-
 }

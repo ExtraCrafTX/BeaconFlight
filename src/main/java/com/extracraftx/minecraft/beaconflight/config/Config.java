@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Level;
 
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registries;
 
 public class Config{
     public static Config INSTANCE = new Config();
@@ -101,6 +101,6 @@ public class Config{
     }
 
     private static Item getItem(String id){
-        return Registry.ITEM.get(new Identifier(id));
+        return Registries.ITEM.get(new Identifier(id));
     }
 }

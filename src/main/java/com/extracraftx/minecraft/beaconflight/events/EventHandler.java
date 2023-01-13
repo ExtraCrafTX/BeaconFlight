@@ -36,8 +36,8 @@ public class EventHandler {
                 return;
             if(!checkItem(config.feet, sp.getEquippedStack(EquipmentSlot.FEET)))
                 return;
-            ServerAdvancementLoader advLoader = sp.getServer().getAdvancementManager();
-            PlayerAdvancementTracker playerAdv = sp.getAdvancementManager();
+            ServerAdvancementLoader advLoader = sp.getServer().getAdvancementLoader();
+            PlayerAdvancementTracker playerAdv = sp.getAdvancementTracker();
             for(Identifier advancement : config.advancements){
                 if(!playerAdv.getProgress(advLoader.get(advancement)).isDone())
                     return;
