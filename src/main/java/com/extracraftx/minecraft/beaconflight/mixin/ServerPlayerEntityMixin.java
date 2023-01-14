@@ -11,9 +11,11 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.world.World;
@@ -44,7 +46,10 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Fl
         getAbilities().allowFlying = false;
         getAbilities().flying = false;
         sendAbilitiesUpdate();
-        addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, Config.INSTANCE.slowFallingTime*20));
+        // if player is wearing elytra dont add slow falling effect
+        if(!getEquippedStack(EquipmentSlot.CHEST).getItem().equals(Items.ELYTRA)) {
+            addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, Config.INSTANCE.slowFallingTime*20));
+        }
     }
 
     @Override
