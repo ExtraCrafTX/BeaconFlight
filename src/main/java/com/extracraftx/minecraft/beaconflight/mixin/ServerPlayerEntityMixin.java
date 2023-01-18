@@ -43,6 +43,9 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Fl
 
     @Override
     public void disallowFlight() {
+        // if in creative mode dont disallow flight
+        if(getAbilities().creativeMode)
+            return;
         getAbilities().allowFlying = false;
         getAbilities().flying = false;
         sendAbilitiesUpdate();
