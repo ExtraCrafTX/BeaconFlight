@@ -11,18 +11,20 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.item.Items;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.world.GameMode;
 import net.minecraft.world.World;
+import net.minecraft.util.math.BlockPos;
 
 @Mixin(ServerPlayerEntity.class)
 public abstract class ServerPlayerEntityMixin extends PlayerEntity implements FlyEffectable{
-    public ServerPlayerEntityMixin(World world, GameProfile profile){
-        super(world, profile);
+    public ServerPlayerEntityMixin(World world, BlockPos pos, float yaw, GameProfile profile) {
+        super(world, pos, yaw, profile);
     }
 
     private int flyTicksLeft = 0;
@@ -32,26 +34,32 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Fl
     public void allowFlight(int ticks, boolean setFlying) {
         flyTicksLeft = Math.max(flyTicksLeft, ticks);
         if(Config.INSTANCE.xpDrainRate == 0 || totalExperience > 0){
-            abilities.allowFlying = true;
+            getAbilities().allowFlying = true;
             if(setFlying)
-                abilities.flying = true;
+                getAbilities().flying = true;
             sendAbilitiesUpdate();
         }
     }
 
     @Override
     public void disallowFlight() {
-        abilities.allowFlying = false;
-        abilities.flying = false;
+        // if in creative mode dont disallow flight
+        if(getAbilities().creativeMode)
+            return;
+        getAbilities().allowFlying = false;
+        getAbilities().flying = false;
         sendAbilitiesUpdate();
-        addPotionEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, Config.INSTANCE.slowFallingTime*20));
+        // if player is wearing elytra dont add slow falling effect
+        if(!getEquippedStack(EquipmentSlot.CHEST).getItem().equals(Items.ELYTRA)) {
+            addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, Config.INSTANCE.slowFallingTime*20));
+        }
     }
 
     @Override
     public void tickFlight() {
         if(flyTicksLeft > 0){
             if(Config.INSTANCE.xpDrainRate != 0){
-                if(abilities.flying){
+                if(getAbilities().flying){
                     xpCounter += Config.INSTANCE.xpDrainRate;
                     addExperience(-(int)Math.floor(xpCounter));
                     xpCounter %= 1;
@@ -77,18 +85,13 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Fl
         EventHandler.onPlayerTick(this);
     }
 
-    @Inject(method = "setGameMode", at = @At("RETURN"))
-    private void onSetGameMode(GameMode gameMode, CallbackInfo info){
-        EventHandler.onSetGameMode(gameMode, this);
-    }
-
-    @Inject(method = "writeCustomDataToTag", at = @At("RETURN"))
-    private void onWriteCustomDataToTag(CompoundTag tag, CallbackInfo info){
+    @Inject(method = "writeCustomDataToNbt", at = @At("RETURN"))
+    private void onWriteCustomDataToTag(NbtCompound tag, CallbackInfo info){
         tag.putInt("flyTicksLeft", flyTicksLeft);
     }
 
-    @Inject(method = "readCustomDataFromTag", at = @At("RETURN"))
-    private void onReadCustomDataFromTag(CompoundTag tag, CallbackInfo info){
+    @Inject(method = "readCustomDataFromNbt", at = @At("RETURN"))
+    private void onReadCustomDataFromTag(NbtCompound tag, CallbackInfo info){
         allowFlight(tag.getInt("flyTicksLeft"), false);
     }
 
